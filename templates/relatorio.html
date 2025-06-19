@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatórios</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}"> {# Usando o home.css para um estilo consistente #}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilos adicionais para o relatório */
+        .report-section {
+            background-color: #fff;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        .report-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 2em;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .report-table th, .report-table td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: left;
+        }
+        .report-table th {
+            background-color: var(--background-dark);
+            color: var(--text-color);
+            font-weight: 600;
+        }
+        .report-table tbody tr:nth-child(even) {
+            background-color: var(--background-light);
+        }
+        .report-table tbody tr:hover {
+            background-color: #e0e0e0;
+        }
+        .no-records {
+            color: var(--secondary-color);
+            font-style: italic;
+            margin-top: 10px;
+        }
+        .page-title {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 3em;
+            font-weight: 700;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container header-content">
+            <div class="logo">Sistema de Ponto</div>
+            <nav class="nav">
+                {% if user %}
+                    <span class="welcome-message">Olá, {{ user.nome }} ({{ user.role.capitalize() }}) - Status: <span class="status-{{ user.estado_ponto }}">{{ user.estado_ponto.capitalize() }}</span></span>
+                    <a href="{{ url_for('logout') }}" class="nav-link logout-btn"><i class="fas fa-sign-out-alt"></i> Sair</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="nav-link"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a href="{{ url_for('registro') }}" class="nav-link"><i class="fas fa-user-plus"></i> Registrar</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <h1 class="page-title">Relatórios de Ponto</h1>
+
+            <section class="report-section">
+                <h2>Registros de Entrada</h2>
+                {% if registrosEntrada %}
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                {% if user.role == 'admin' %}<th>Usuário</th>{% endif %}
+                                <th>Hora</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for registro in registrosEntrada %}
+                                <tr>
+                                    <td>{{ registro.id }}</td>
+                                    {% if user.role == 'admin' %}<td>{{ registro.usuario.nome }}</td>{% endif %}
+                                    <td>{{ registro.hora.strftime('%d/%m/%Y %H:%M:%S') }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="no-records">Nenhum registro de entrada encontrado.</p>
+                {% endif %}
+            </section>
+
+            <section class="report-section">
+                <h2>Registros de Início de Almoço</h2>
+                {% if registrosAlmocoEntrada %}
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                {% if user.role == 'admin' %}<th>Usuário</th>{% endif %}
+                                <th>Hora</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for registro in registrosAlmocoEntrada %}
+                                <tr>
+                                    <td>{{ registro.id }}</td>
+                                    {% if user.role == 'admin' %}<td>{{ registro.usuario.nome }}</td>{% endif %}
+                                    <td>{{ registro.hora.strftime('%d/%m/%Y %H:%M:%S') }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="no-records">Nenhum registro de início de almoço encontrado.</p>
+                {% endif %}
+            </section>
+
+            <section class="report-section">
+                <h2>Registros de Fim de Almoço</h2>
+                {% if registrosAlmocoSaida %}
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                {% if user.role == 'admin' %}<th>Usuário</th>{% endif %}
+                                <th>Hora</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for registro in registrosAlmocoSaida %}
+                                <tr>
+                                    <td>{{ registro.id }}</td>
+                                    {% if user.role == 'admin' %}<td>{{ registro.usuario.nome }}</td>{% endif %}
+                                    <td>{{ registro.hora.strftime('%d/%m/%Y %H:%M:%S') }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="no-records">Nenhum registro de fim de almoço encontrado.</p>
+                {% endif %}
+            </section>
+
+            <section class="report-section">
+                <h2>Registros de Saída</h2>
+                {% if registrosSaida %}
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                {% if user.role == 'admin' %}<th>Usuário</th>{% endif %}
+                                <th>Hora</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for registro in registrosSaida %}
+                                <tr>
+                                    <td>{{ registro.id }}</td>
+                                    {% if user.role == 'admin' %}<td>{{ registro.usuario.nome }}</td>{% endif %}
+                                    <td>{{ registro.hora.strftime('%d/%m/%Y %H:%M:%S') }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="no-records">Nenhum registro de saída encontrado.</p>
+                {% endif %}
+            </section>
+
+            <section class="report-section">
+                <h2>Justificativas</h2>
+                {% if registrosJustificativa %}
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                {% if user.role == 'admin' %}<th>Usuário</th>{% endif %}
+                                <th>Justificativa</th>
+                                <th>Hora</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for registro in registrosJustificativa %}
+                                <tr>
+                                    <td>{{ registro.id }}</td>
+                                    {% if user.role == 'admin' %}<td>{{ registro.usuario.nome }}</td>{% endif %}
+                                    <td>{{ registro.nome }}</td> {# 'nome' é o campo de texto da justificativa #}
+                                    <td>{{ registro.hora.strftime('%d/%m/%Y %H:%M:%S') }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="no-records">Nenhuma justificativa encontrada.</p>
+                {% endif %}
+            </section>
+
+            <a href="{{ url_for('home') }}" class="back-button"><i class="fas fa-arrow-left"></i> Voltar para Home</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Sistema de Ponto. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>

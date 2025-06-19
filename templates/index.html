@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Bater Ponto</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Bater Ponto</h1>
+    <div class="time-display" id="clock">00:00:00</div>
+    <button onclick="baterPonto()">Bater Ponto</button>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const time = now.toLocaleTimeString('pt-BR');
+      document.getElementById('clock').textContent = time;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    function baterPonto() {
+      fetch('/bater_ponto', {
+        method: 'POST',
+      })
+      .then(res => res.json())
+      .then(data => alert(data.mensagem))
+      .catch(err => console.error("Erro ao bater ponto:", err));
+    }
+  </script>
+</body>
+</html>

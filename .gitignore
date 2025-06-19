@@ -1,0 +1,13 @@
+venv/
+gabriel
+.venv/
+env/
+*.pyc
+__pycache__/
+.vscode/
+.idea/
+instance
+*.db
+*.log
+logs/
+contas.txt

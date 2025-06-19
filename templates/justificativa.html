@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Justificativa de Atraso</title>
+    <link rel="stylesheet" href="/static/justificativa.css">
+</head>
+<body>
+
+    <a class="voltar" href="{{ url_for('home') }}">Voltar</a>
+
+    <div class="container">
+        <h2>Você está atrasado!</h2>
+        <h3 class="alerta">Justifique!</h3>
+        <div id="texto">
+        <form method="POST">
+        <textarea minlength=20  maxlength=2000 placeholder="Digite sua justificativa aqui..." name="nome"></textarea>
+        </div>
+        <button class="enviar">Enviar</button>
+    </form>
+    </div>
+</body>
+</html>

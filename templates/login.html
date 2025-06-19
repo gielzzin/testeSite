@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/static/login.css">
+</head>
+<body>
+    <div class="container">
+        <form method="POST" action="">
+            <h2>Faça o seu login</h2>
+            
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class="flashes">
+                        {% for message in messages %}
+                            <li class="">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+
+            <label for="e">Seu e-mail*</label>
+            <input type="text" name="nome" required>
+
+            <label for="senha">Sua senha*</label>
+            <input type="password" name="senha" required>
+
+            <div class="checkbox">
+                <input type="checkbox" name="lembrar"> Lembrar-me
+            </div>
+
+            <button type="submit">ENTRAR</button>
+            <p>Esqueceu sua senha? <a href="#">Clique aqui!</a></p>
+        </form>
+        <p>Não tem conta?<a href="{{ url_for('registro') }}">Registrar</a></p>
+    </div>
+</body>
+</html>

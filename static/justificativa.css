@@ -1,0 +1,70 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #eeeeee;
+    font-family: Arial, sans-serif;
+}
+
+.voltar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 8px 14px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.container {
+    background-color: white;
+    width: 300px;
+    margin: 100px auto;
+    padding: 2%;
+    margin-top: 22ch;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    user-select: none
+}
+
+.container h2 {
+    margin: 0;
+    color: black;
+}
+
+.alerta {
+    color: red;
+    margin: 10px 0 20px;
+}
+
+textarea {
+    width: 90%;
+    height: 150px;
+    border-radius: 20px;
+    border: 1px solid #aaa;
+    margin-bottom: auto;
+    resize: none;
+    font-size: 14px;
+    
+}
+
+.enviar {
+    margin-top: 20px;
+    background-color: #004aad;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 25px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.container textarea {
+    padding-left: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}

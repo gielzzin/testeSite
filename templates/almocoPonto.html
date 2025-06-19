@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Pontos de Entrada</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilos adicionais específicos para esta página */
+        .record-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border-radius: 8px;
+        }
+        .record-table th, .record-table td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: left;
+        }
+        .record-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+        .record-table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .record-table tbody tr:hover {
+            background-color: #e9ecef;
+        }
+        .page-title {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container header-content">
+            <a href="{{ url_for('home') }}" class="logo">Minha Biblioteca & Ponto</a>
+            <nav class="nav">
+                {% if user %}
+                    <span class="welcome-message">Olá, {{ user.nome }} ({{ user.role.capitalize() }})</span>
+                    {% if user.role == 'funcionario' %}
+                        <span class="status-message status-{{ user.estado_ponto }}">Status Ponto: {{ user.estado_ponto.capitalize() }}</span>
+                    {% endif %}
+                    {% if user.role == 'admin' %}
+                        <a href="{{ url_for('admin_dashboard') }}" class="nav-link"><i class="fas fa-tools"></i> Admin</a>
+                    {% endif %}
+                    <a href="{{ url_for('logout') }}" class="nav-link logout-btn"><i class="fas fa-sign-out-alt"></i> Sair</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="nav-link"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a href="{{ url_for('registro') }}" class="nav-link"><i class="fas fa-user-plus"></i> Registrar</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <h1 class="page-title">Meus Pontos de Entrada</h1>
+
+            {% if registrosEntrada %}
+                <table class="record-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Hora</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for registro in registrosEntrada %}
+                            <tr>
+                                <td>{{ registro.id }}</td>
+                                <td>{{ registro.hora.strftime('%d/%m/%Y %H:%M:%S') }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>Nenhum registro de entrada encontrado.</p>
+            {% endif %}
+
+            <a href="{{ url_for('home') }}" class="back-button"><i class="fas fa-arrow-left"></i> Voltar para Home</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Minha Biblioteca e Sistema de Ponto. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Usuários</title>
+    <link rel="stylesheet" href="/static/registro.css">
+    <link rel="stylesheet" href="/static/manageTable.css">
+</head>
+<body>
+    <div class="container" style="width: 500px;">
+        <h2>Gerenciar Usuários</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Papel Atual</th>
+                    <th>Alterar Papel para</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                <tr>
+                    <td>{{ usuario.id }}</td>
+                    <td>{{ usuario.nome }}</td>
+                    <td>{{ usuario.role.capitalize() }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('manage_users') }}" style="display:inline;">
+                            <input type="hidden" name="user_id" value="{{ usuario.id }}">
+                            <select name="new_role" class="role-selector">
+                                <option value="usuario" {% if usuario.role == 'usuario' %}selected{% endif %}>Usuário</option>
+                                <option value="funcionario" {% if usuario.role == 'funcionario' %}selected{% endif %}>Funcionário</option>
+                                <option value="admin" {% if usuario.role == 'admin' %}selected{% endif %}>Admin</option>
+                            </select>
+                    </td>
+                    <td>
+                            <button type="submit" class="change-role-btn">Alterar Papel</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p>
+            <a href="{{ url_for('home') }}"><button>Voltar</button></a>
+        </p> 
+    </div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+body {
+    background: linear-gradient(to bottom, #e0e0e0, #ffffff);
+    font-family: 'Segoe UI', sans-serif; 
+}
+
+  .tabelaEntrada, th, td{
+    border-collapse: collapse; /*define a separação entre as bordar*/
+    padding: 10px;
+    text-align: left;
+    border: 1px solid rgb(160 160 160);
+}
+.tabelaSaida, th, td{
+  border-collapse: collapse; /*define a separação entre as bordar*/
+  padding: 10px;
+  text-align: left;
+  border: 1px solid rgb(160 160 160);
+}
+
+.tabelaJustificativa, th, td{
+  border-collapse: collapse; /*define a separação entre as bordar*/
+  padding: 10px;
+  text-align: left;
+  border: 1px solid rgb(160 160 160);
+}
+th{
+    background-color: lightgray;
+}
+
+
+#tabelaRolamento {
+  max-width: 150px;
+  max-height: 150px;
+  overflow: auto;
+}
+
+.container #tabelaFlex {
+  display: flex;
+  flex: 1;
+  flex-direction:row;
+}
+
+.container {
+  margin-top: 10%;
+  margin-left: 20%;
+  margin-bottom: 10%;
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px #aaa;
+  width: 800px;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+input {
+  padding: 10px;
+  font-size: 16px;
+}
+
+.botaoCarregar {
+  padding: 10px;
+  background: #007bff;
+  color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+}
