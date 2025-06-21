@@ -11,7 +11,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from models import db, Usuario, entradaPonto, saidaPonto, almocoPontoEntrada, almocoPontoSaida, justificativa
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
+app.secret_key = os.environ.get('FLASK_SECRET_KEY', os.urandom(24))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///banco_ponto.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
