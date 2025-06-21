@@ -4,7 +4,7 @@
     {
       "src": "app.py",
       "use": "@vercel/python@2.0.1",
-      "config": { "maxLambdaSize": "15mb", "runtime": "python3.13.2" }
+      "config": { "maxLambdaSize": "15mb", "runtime": "python3.6" }
     }
   ],
   "routes": [
@@ -13,7 +13,7 @@
       "dest": "static/$1"
     },
     {
-      "src": "/(.*)", 
+      "src": "/(.*)",
       "dest": "app.py"
     }
   ],
