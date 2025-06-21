@@ -1,13 +1,20 @@
-   {
-     "rewrites": [
-       {
-         "source": "/(.*)",
-         "destination": "/api"
-       }
-     ],
-     "functions": {
-       "api/app.py": {
-         "runtime": "python3.9"
-       }
-     }
-   }
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "app.py",
+      "use": "@vercel/python@2.0.1",
+      "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "app.py"
+    }
+  ],
+  "env": {
+    "SQLALCHEMY_DATABASE_URI": "sqlite:///banco_ponto.db",
+    "FLASK_APP": "app.py"
+  }
+}
