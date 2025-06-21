@@ -1,7 +1,7 @@
 # manage_db.py
 
-from app import app, db # Importa a instância do app e db
-from models import Usuario # Importa o modelo Usuario
+from api.app import app, db # Importa a instância do app e db
+from api.models import Usuario # Importa o modelo Usuario
 
 def set_user_role_script(user_id, new_role):
     """

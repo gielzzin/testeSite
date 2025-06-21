@@ -14,19 +14,17 @@ class Usuario(db.Model):
     nome = db.Column(db.String(100), unique=True, nullable=False) # Nome agora é único
     senha_hash = db.Column(db.String(200), nullable=True)
     role = db.Column(db.String(50), default='usuario') # 'usuario', 'funcionario', 'admin'
-    
     # Novo campo para rastrear o estado do ponto
     # 'fora': Não bateu entrada ou já bateu saída
     # 'trabalhando': Bateu entrada, mas não almoço ou saída
     # 'almoco': Bateu início almoço, mas não fim almoço
     estado_ponto = db.Column(db.String(50), default='fora')
-
     # Relacionamentos
     registrosEntrada = db.relationship('entradaPonto', backref='usuario', lazy=True)
     registrosSaida = db.relationship('saidaPonto', backref='usuario', lazy=True)
     registrosAlmocoEntrada = db.relationship('almocoPontoEntrada', backref='usuario', lazy=True) # Novo
     registrosAlmocoSaida = db.relationship('almocoPontoSaida', backref='usuario', lazy=True)     # Novo
-    textoJustificativa = db.relationship('justificativa', backref='usuario', lazy=True)
+    registrosJustificativa = db.relationship('justificativa', backref='usuario', lazy=True)
 
     def set_senha(self, senha):
         self.senha_hash = generate_password_hash(senha)

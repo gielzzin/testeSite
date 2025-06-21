@@ -2,6 +2,7 @@ venv/
 gabriel
 .venv/
 env/
+migrations
 *.pyc
 __pycache__/
 .vscode/

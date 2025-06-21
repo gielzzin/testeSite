@@ -177,14 +177,14 @@ def bater_saida():
 # --- Rotas de Páginas Específicas (mantêm o role_required) ---
 
 @app.route('/templates/entradaPonto.html', methods=['GET'])
-@role_required('usuario') # Mantém o decorador, mas o uso mudou
+@role_required('funcionario') # Mantém o decorador, mas o uso mudou
 def view_entrada_ponto():
     usuario_logado = Usuario.query.get(session['usuario_id'])
     registrosE = entradaPonto.query.filter_by(usuario_id=usuario_logado.id).order_by(entradaPonto.hora.desc()).all()
     return render_template('entradaPonto.html', registrosEntrada=registrosE, user=usuario_logado)
 
 @app.route('/templates/saidaPonto.html', methods=['GET'])
-@role_required('usuario') # Mantém o decorador, mas o uso mudou
+@role_required('funcionario') # Mantém o decorador, mas o uso mudou
 def view_saida_ponto():
     usuario_logado = Usuario.query.get(session['usuario_id'])
     registrosS = saidaPonto.query.filter_by(usuario_id=usuario_logado.id).order_by(saidaPonto.hora.desc()).all()
@@ -192,7 +192,7 @@ def view_saida_ponto():
 
 # Nova rota para visualizar os pontos de almoço
 @app.route('/templates/almocoPonto.html', methods=['GET'])
-@role_required('usuario')
+@role_required('funcionario')
 def view_almoco_ponto():
     usuario_logado = Usuario.query.get(session['usuario_id'])
     registrosAE = almocoPontoEntrada.query.filter_by(usuario_id=usuario_logado.id).order_by(almocoPontoEntrada.hora.desc()).all()
@@ -205,9 +205,9 @@ def view_almoco_ponto():
 def justificativas():
     usuario_logado = Usuario.query.get(session['usuario_id'])
     if request.method == 'POST':
-        textoJustificativa = request.form['nome']
+        registrosJustificativa = request.form['nome']
         if usuario_logado:
-            novo_registro = justificativa(nome=textoJustificativa, usuario_id=usuario_logado.id)
+            novo_registro = justificativa(nome=registrosJustificativa, usuario_id=usuario_logado.id)
             db.session.add(novo_registro)
             db.session.commit()
             flash('Justificativa enviada com sucesso!', 'success')
