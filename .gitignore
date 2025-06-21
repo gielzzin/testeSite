@@ -7,7 +7,6 @@ migrations
 __pycache__/
 .vscode/
 .idea/
-instance
 *.db
 *.log
 logs/
